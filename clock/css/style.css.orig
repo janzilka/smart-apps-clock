@@ -1,0 +1,552 @@
+* { margin:0; 
+    padding:0; 
+  }
+ 
+body { 
+    background-color: #000000;
+     }
+
+arc-canvas {
+    width: 320px;
+    height: 320px;
+    border: 1px solid #ccc;
+   z-index: 100;
+   }
+
+.screen {
+   position: absolute;
+   left: 0px;
+   top: 0px;    
+   width: 576px;
+   height: 320px;
+   background-color: #232323;
+   background-image: url(../images/bg_576x320.jpg);
+   background-repeat: no-repeat;
+    overflow: hidden;
+//   background-position: center;
+   z-index: 2;
+   }
+.on-top {
+//   background-position: center;
+   z-index: 101;
+   }
+
+
+.fullscreen-bg {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: -100;
+}
+
+.fullscreen-bg__video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.dial {
+   position: absolute;
+    background-color: #000000;
+    opacity: 0.80;
+//   left: 50%;
+//   top: 50%;
+   width: 320px;
+   height: 320px;
+   border: 1px solid #5c5c5c;
+   border-radius: 50%;
+//   border-radius: 0%;
+//   box-shadow: 1px 14px 21px 0 rgba(0,0,0,.2);
+   margin-left: 128px; /* 586-350/2  or (576/320)/2 */
+   margin-top: 0px; /* (400-350)/2  or (320-320)/2 */
+    z-index: 3;
+
+}
+
+
+
+span {
+   display: inline-block;
+}
+
+.dot {
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   margin: auto;
+   width: 16px;
+   height: 16px;
+   border-radius: 50%;
+   background: radial-gradient(ellipse 20px 15px at 50% 0, #ececec 40%, #5c5c5c 80%);
+   z-index: 11;
+//   box-shadow: 0 2px 5px 0 rgba(0,0,0,.3);
+}
+
+.sec-hand {
+   position: absolute;
+   top: 25px;
+   left: 50%;
+   margin-left: -7px;
+   width: 14px;
+   height: 172px;
+//   background: url('https://themegion.github.com/AnalogClock/sec.svg') 50% 50% no-repeat;
+   background: url('https://www.tjstadionbrno.cz/smart-apps/cl/images/sec-red.svg') 50% 50% no-repeat;
+   z-index: 10;
+   transform-origin: 50% 136px;
+}
+
+/*.sec-hand.shadow {
+   top: 46px;
+   margin-left: -4px;
+   background-image: url('https://themegion.github.com/AnalogClock/sec-shdw.svg');
+   opacity: .1;
+   z-index: 9;
+   filter: blur(2px);
+}*/
+
+.min-hand {
+   position: absolute;
+   top: 36px;  
+   left: 50%;
+   margin-left: -8px;
+   width: 16px;
+   height: 144px;
+//   background: url('https://themegion.github.com/AnalogClock/min.svg') 50% 50% no-repeat;
+   background: url('https://www.tjstadionbrno.cz/smart-apps/cl/images/min-sand-with-outline.svg') 50% 50% no-repeat;
+   z-index: 8;
+   transform-origin: 50% 124px;
+}
+
+/*.min-hand.shadow {
+   top: 58px;
+   margin-left: -5px;
+   background-image: url('https://themegion.github.com/AnalogClock/min-shdw.svg');
+   opacity: .1;
+   z-index: 7;
+   filter: blur(2px);
+} */
+
+.hour-hand {
+   position: absolute;
+   top: 70px;
+   left: 50%;
+   margin-left: -7px;
+   width: 14px;
+   height: 110px;
+//   background: url('https://themegion.github.com/AnalogClock/hour.svg') 50% 50% no-repeat;
+   background: url('https://www.tjstadionbrno.cz/smart-apps/cl/images/hour-sand-with-outline.svg') 50% 50% no-repeat;
+   z-index: 6;
+   transform-origin: 50% 90px;
+}
+
+/*.hour-hand.shadow {
+   top: 92px;
+   margin-left: -4px;
+   background-image: url('https://themegion.github.com/AnalogClock/hour-shdw.svg');
+   opacity: .1;
+   z-index: 5;
+   filter: blur(2px);
+} */
+
+.twelve,
+.three,
+.six,
+.nine {
+   position: absolute;
+   font-family: Lato, sans-serif;
+   font-size: 32px;
+   color: #777;
+}
+
+.twelve {
+   top: 25px;
+   left: 142px;
+}
+
+.three {
+   top: 140px;
+   right: 34px;
+}
+
+.six {
+   left: 150px;
+   bottom: 25px;
+}
+
+.nine {
+   top: 140px;
+   left: 34px;
+}
+
+.diallines {
+   position: absolute;
+   top: 5px;
+   left: 50%;
+   margin-left: -1px;
+   width: 2px;
+   height: 5px;
+//   background: #b3b3b0;
+   background: #00ffff;
+   z-index: 3;
+   transform-origin: 50% 155px;
+}
+
+.diallines:nth-of-type(5n) {
+   position: absolute;
+   top: 5px;
+   left: 50%;
+   margin-left: -2px;
+   width: 4px;
+   height: 15px;
+//   background: #b3b3b0;
+   background: #d3d3ff;
+   z-index: 3;
+   transform-origin: 50% 155px;
+}
+
+.smartarc {
+   position: absolute;
+   top: 5px;
+   left: 50%;
+   margin-left: -1px;
+   width: 320px;
+   height: 320px;
+//   background: #b3b3b0;
+//   background: #00ffff;
+
+   z-index: 3;
+   transform-origin: 50% 155px;
+}
+
+
+.date {
+   position: absolute;
+   top: 222px;
+   left: 50%;
+   margin-left: -23px;
+   width: 46px;
+   height: 30px;
+//   background: #83837a;
+//   background: #63617a;
+   background: #050505;
+   border-radius: 6px;
+//   font-family: 'Fjalla One', sans-serif;
+//   font-family: 'Arial';
+//   font-size: 28px;
+   font-family: Lato, sans-serif;
+   font-size: 30px;
+   line-height: 32px;
+   color: white;
+   text-align: center;
+//   box-shadow: inset 0 2px 2px 0 rgba(0,0,0,.3), inset 0 -2px 2px 0 rgba(255,255,255,.2);
+}   
+
+.title-blue {
+   position: absolute;
+   top: 70px;
+   left: 50%;
+   margin-left: -105px;
+   width: 140px;
+   height: 25px;
+//   background: #050505;
+//   border-radius: 6px;
+//   font-family: 'Fjalla One', sans-serif;
+   font-family: 'Arial';
+   font-size: 21px;
+   font-weight: bold;
+   line-height: 30px;
+   color: #6666dd;
+   text-align: center;
+//   box-shadow: inset 0 2px 2px 0 rgba(0,0,0,.3), inset 0 -2px 2px 0 rgba(255,255,255,.2);   
+}
+
+.title-red {
+   position: absolute;
+   top: 70px;
+   left: 190px;
+//   margin-left: 35px;
+   width: 60px;
+   height: 25px;
+//   background: #050505;
+//   border-radius: 6px;
+//   font-family: 'Fjalla One', sans-serif;
+   font-family: 'Arial';
+   font-size: 21px;
+   font-weight: bold;
+   line-height: 30px;
+   color: #dd3333;
+   text-align: left;
+//   box-shadow: inset 0 2px 2px 0 rgba(0,0,0,.3), inset 0 -2px 2px 0 rgba(255,255,255,.2);   
+}
+
+
+.weekday {
+   position: absolute;
+   top: 190px;
+   left: 50%;
+   margin-left: -38px;
+   width: 80px;
+   height: 30px;
+//   background: #83837a;
+//   background: #63617a;
+   background: #050505;
+   border-radius: 6px;
+//   font-family: 'Fjalla One', sans-serif;
+//   font-family: 'Arial';
+   font-family: Lato, sans-serif;
+   font-size: 21px;
+   line-height: 30px;
+   color: white;
+   text-align: center;
+//   box-shadow: inset 0 2px 2px 0 rgba(0,0,0,.3), inset 0 -2px 2px 0 rgba(255,255,255,.2);
+}
+
+.screentext {
+   position: absolute;
+   top: 93px;
+   left: 30%;
+   margin-left: -38px;
+   width: 200px;
+   height: 20px;
+   font-family: Lato, sans-serif;
+   font-size: 24px;
+   line-height: 30px;
+   color: #33aa33;
+   text-align: center;
+//   box-shadow: inset 0 2px 2px 0 rgba(0,0,0,.3), inset 0 -2px 2px 0 rgba(255,255,255,.2);
+}
+
+.screentext2 {
+   position: absolute;
+   top: 115px;
+   left: 30%;
+   margin-left: -38px;
+   width: 200px;
+   height: 20px;
+   font-family: Lato, sans-serif;
+   font-size: 24px;
+   line-height: 30px;
+   color: #33aa33;
+   text-align: center;
+}
+
+.screentextNext {
+   position: absolute;
+   top: 292px;
+   left: 381px;
+   width: 190px;
+   height: 25px;
+   line-height: 25px;
+   text-align: center;
+   background: #000000;
+   opacity: 0.80;
+   border: 1px solid #5c5c5c;
+   border-radius: 6px;
+   font-family: Lato, sans-serif;
+   font-size: 24px;
+   color: #33aa33;
+}
+
+.screentextDebugMessage {
+   position: absolute;
+   top: 292px;
+   left: 5px;
+   width: 190px;
+   height: 25px;
+   line-height: 25px;
+   text-align: center;
+   background: #000000;
+   opacity: 0.80;
+   border: 1px solid #5c5c5c;
+   border-radius: 6px;
+   font-family: Lato, sans-serif;
+   font-size: 24px;
+   color: #33aa33;
+}
+
+
+
+
+div.slideIn { 
+      margin: auto;   
+      position: absolute; 
+      z-index: 50;
+      top: -321px;
+      left: 0px; 
+      width: 570px; 
+      height: 314px; 
+      border: 3px solid grey;
+      border-radius: 10px;
+      background : black;
+      
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+      
+      text-align: center;
+      font-family: 'Arial';
+      font-size: 32px;
+      font-weight: bold;
+
+        
+      vertical-align: middle;  
+      color : white;
+      text-align: center;
+      text-height: 48px; 
+ 
+      animation: waitHidden 5s 1 ,
+                 slideIn 3s 5s 1 forwards,
+                 stayThere 6s 8s 1 forwards,
+                 slideOut 3s 14s 1 forwards;
+  } 
+
+  div.waitHidden.first {
+      top: 321px;
+      opacity: 0;
+      z-index: 20;
+  }
+
+  div.slideIn.first {
+      top: 0px;
+      opacity: 0.85;
+      z-index: 20;
+  }
+
+  div.stayThere.first {
+     top: 0px;
+     opacity: 0.85; 
+     z-index: 20;
+  }
+  
+  div.slideOut.first {
+     top: 321px;
+     opacity: 0.85; 
+     z-index: 20;
+  }
+
+  div.logo { 
+      margin: auto;   
+      position: absolute; 
+      z-index: 60;
+      background-image: url("../images/logo.gif");
+      width: 250px; 
+      height: 250px;
+      bottom: 300px;
+      right: 556px;
+      opacity: 0.5; 
+  
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  }
+
+  @keyframes waitHidden
+  { 
+      from { opacity: 0; }
+        to { opacity: 0; }
+  }
+  @-moz-keyframes waitHidden
+  { 
+      from { opacity: 0; }
+        to { opacity: 0; }
+  }
+  @-webkit-keyframes waitHidden
+  { 
+      from { opacity: 0; }
+        to { opacity: 0; }
+  }
+  @-o-keyframes waitHidden
+  { 
+      from { opacity: 0; }
+        to { opacity: 0; }
+  }
+
+
+  @keyframes slideIn
+  { 
+        0% { opacity: 0; 
+             top: 321px; } 
+      100% { opacity: 0.7;
+             top:  0px; } 
+  } 
+  @-moz-keyframes slideIn
+  { 
+        0% { opacity: 0; 
+             top: 321px; } 
+      100% { opacity: 0.7;
+             top:  0px; } 
+  } 
+  @-webkit-keyframes slideIn
+  { 
+        0% { opacity: 0; 
+             top: 321px; } 
+      100% { opacity: 0.7;
+             top:  0px; } 
+  } 
+  @-o-keyframes slideIn
+  { 
+        0% { opacity: 0; 
+             top: 321px; } 
+      100% { opacity: 0.7;
+             top:  0px; } 
+  } 
+
+  @keyframes stayThere
+  { 
+      from { opacity: 0.7; }
+        to { opacity: 0.7; }
+  }
+  @-moz-keyframes stayThere
+  { 
+      from { opacity: 0.7; }
+        to { opacity: 0.7; }
+  }
+  @-webkit-keyframes stayThere
+  { 
+      from { opacity: 0.7; }
+        to { opacity: 0.7; }
+  }
+  @-o-keyframes stayThere
+  { 
+      from { opacity: 0.7; }
+        to { opacity: 0.7; }
+  }
+
+
+  @keyframes slideOut
+  { 
+        0% { opacity: 0.7; 
+             top: 0px; }
+      100% { opacity: 0; 
+             top: 321px; } 
+  } 
+  @-moz-keyframes slideOut
+  { 
+        0% { opacity: 0.7; 
+             top: 0px; }
+      100% { opacity: 0; 
+             top: 321px; } 
+  } 
+  @-webkit-keyframes slideOut
+  { 
+        0% { opacity: 0.7; 
+             top: 0px; }
+      100% { opacity: 0; 
+             top: 321px; } 
+  } 
+  @-o-keyframes slideOut
+  { 
+        0% { opacity: 0.7; 
+             top: 0px; }
+      100% { opacity: 0; 
+             top: 321px; } 
+  } 
+
